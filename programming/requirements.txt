@@ -1,1 +1,6 @@
+# for api
 fastapi
+
+# for tests
+pytest
+requests

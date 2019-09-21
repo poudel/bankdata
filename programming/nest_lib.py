@@ -5,7 +5,6 @@ according to the provided nesting keys.
 
 
 def nest_dicts(items, nesting_keys):
-    leaf_nesting_key = nesting_keys[-1]
     big_tree = {}
 
     for item in items:
@@ -19,7 +18,7 @@ def nest_dicts(items, nesting_keys):
             next_node_key = item[nesting_key]
 
             if next_node_key not in tree:
-                is_leaf = nesting_key == leaf_nesting_key
+                is_leaf = nesting_key == nesting_keys[-1]
                 tree[next_node_key] = [] if is_leaf else {}
 
             tree = tree[next_node_key]
