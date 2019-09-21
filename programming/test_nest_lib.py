@@ -1,5 +1,5 @@
 from unittest import TestCase
-from nest import nest_it
+from nest_lib import nest_dicts
 
 
 INPUT_DATA = [
@@ -96,6 +96,6 @@ EXPECTED_RESPONSE = {
 
 class TestNest(TestCase):
 
-    def test_nest_it(self):
-        result = nest_it(INPUT_DATA, ['currency', 'country', 'city'])
+    def test_nest_dicts(self):
+        result = nest_dicts(INPUT_DATA, ['currency', 'country', 'city'])
         self.assertEqual(result, EXPECTED_RESPONSE)
