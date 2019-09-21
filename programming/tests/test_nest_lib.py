@@ -13,6 +13,7 @@ TEST_PARAMS = [
         ("input.json", "output_currency.json", ["currency"]),
         ("input.json", "output_currency_country.json", ["currency", "country"]),
         ("input.json", "output_currency_country_city.json", ["currency", "country", "city"]),
+        ("input.json", "output_currency_country_city_amount.json", ["currency", "country", "city", "amount"]),
     ],
 ]
 

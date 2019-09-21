@@ -17,6 +17,13 @@ def nest_dicts(items, nesting_keys):
         for nesting_key in nesting_keys:
             next_node_key = item[nesting_key]
 
+            # The input/output are usually json. JSON standard
+            # requires that the keys always be strings. Let us
+            # explicitly cast the keys to strings even though
+            # json.dumps can do that implicitly.
+            if not isinstance(next_node_key, str):
+                next_node_key = str(next_node_key)
+
             if next_node_key not in tree:
                 is_leaf = nesting_key == nesting_keys[-1]
                 tree[next_node_key] = [] if is_leaf else {}
