@@ -3,7 +3,7 @@ import json
 import pytest
 
 
-RESOURCES_PATH = os.path.dirname(__file__)
+RESOURCES_PATH = os.path.join(os.path.dirname(__file__), 'resources')
 
 
 def read_json(filename):
@@ -14,15 +14,5 @@ def read_json(filename):
 
 
 @pytest.fixture
-def input_data():
-    return read_json('input.json')
-
-
-@pytest.fixture
-def expected_response():
-    return read_json('output.json')
-
-
-@pytest.fixture
-def nesting_keys():
-    return ['currency', 'country', 'city']
+def json_resource_reader():
+    return read_json

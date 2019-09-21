@@ -23,8 +23,9 @@ def nest_dicts(items, nesting_keys):
 
             tree = tree[next_node_key]
 
-        # in the end, the `tree` is always
-        # going to be the leaf node
-        tree.append(leaf_item)
+        # `tree` is always going to be the leaf node
+        # but `leaf_item` can be an empty dict
+        if leaf_item:
+            tree.append(leaf_item)
 
     return big_tree
