@@ -1,5 +1,6 @@
 # for api
 fastapi
+uvicorn
 
 # test runner
 pytest
