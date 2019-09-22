@@ -23,16 +23,26 @@ pip install -r requirements.txt
 
 ## Running the tests
 
-After installing from `requirements.txt` file run the following
-command:
+Tests rely on pytest being installed which is included in the
+`requirements.txt` file.
+
+Running tests is as simple as running the command below:
 
 ```shell
 pytest
 ```
 
-Note: The tests should run fine on Linux/MacOS machines. The `pexpect`
-library that is being used to test the `nest.py` as a CLI script might
-not behave correctly on Windows though.
+Note: The `pexpect` library that is being used to test the `nest.py`
+as a CLI script might not behave correctly on Windows. They should run
+fine on Linux/MacOS machines though.
+
+The three modules in this program, `nest_lib.py`, `nest_api.py` and
+`nest.py` are tested with the same input/output parameters in their
+respective unit tests.
+
+The input and output content are supplied through fixture files in
+`tests/fixtures/` directory. They are then read for each test with
+mapping specified in `utils.COMMON_TEST_PARAMS`.
 
 
 ## The CLI script (Task 1)
