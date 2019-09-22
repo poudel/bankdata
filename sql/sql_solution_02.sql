@@ -1,13 +1,14 @@
 WITH txns AS (
     SELECT
         user_id,
-        txn.ts as txn_ts,
-        er.ts AS er_ts,
+        date_trunc('milliseconds', txn.ts) as txn_ts,
+        date_trunc('second', er.ts) AS er_ts,
         amount, rate, txn.currency AS txn_currency
     FROM transactions txn LEFT JOIN exchange_rates er
-    ON txn.currency = er.from_currency
-        AND er.ts <= txn.ts
-	    AND er.to_currency = 'GBP'
+    ON
+        txn.currency = er.from_currency
+        AND date_trunc('second', er.ts) <= date_trunc('milliseconds', txn.ts)
+        AND er.to_currency = 'GBP'
 )
 SELECT
     user_id,

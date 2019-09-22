@@ -3,19 +3,20 @@ WITH to_gbp_rates AS (
         DISTINCT ON (from_currency, to_currency) from_currency, to_currency,
         last_value(rate) OVER (
             PARTITION BY from_currency, to_currency
-            ORDER BY ts ASC
+            ORDER BY date_trunc('second', ts) ASC
             ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
         ) AS rate
     FROM exchange_rates
     WHERE to_currency = 'GBP'
     ORDER BY from_currency
 )
+
 SELECT
-    user_id,
+    DISTINCT user_id,
     sum(converted) AS total_spent_gbp
 FROM (
     SELECT
-        DISTINCT user_id,
+        DISTINCT ON (date_trunc('milliseconds', ts), user_id, currency) ts, user_id, currency,
         CASE
             WHEN currency = 'GBP' THEN amount
             ELSE amount * rate
