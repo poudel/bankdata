@@ -15,7 +15,11 @@ def build_args_parser():
     )
 
     parser.add_argument(
-        "--input-data", nargs="?", type=argparse.FileType("r"), default=sys.stdin
+        "--input_data",
+        nargs="?",
+        type=argparse.FileType("r"),
+        default=sys.stdin,
+        help="Input JSON array. Can be in the form of a file path or passed through stdin",
     )
 
     return parser
@@ -35,7 +39,7 @@ def main():
         args = parse_args()
         data = json.load(args.input_data)
         tree = nest_dicts(data, args.nesting_keys)
-        sys.stdout.write(json.dumps(tree, indent=4))
+        sys.stdout.write(json.dumps(tree, indent=2))
     except Exception as err:
         sys.stderr.write("Failed to nest: \n" f"{err}")
         sys.exit(1)
