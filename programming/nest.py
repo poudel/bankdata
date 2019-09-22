@@ -23,13 +23,17 @@ def build_args_parser():
 
 def parse_args():
     args_parser = build_args_parser()
-    return args_parser.parse_args()
+    args = args_parser.parse_args()
+
+    if args.input_data.isatty():
+        raise ValueError("Must provide an input JSON list.")
+    return args
 
 
-def main(args):
-    data = json.load(args.input_data)
-
+def main():
     try:
+        args = parse_args()
+        data = json.load(args.input_data)
         tree = nest_dicts(data, args.nesting_keys)
         sys.stdout.write(json.dumps(tree, indent=4))
     except Exception as err:
@@ -38,4 +42,4 @@ def main(args):
 
 
 if __name__ == "__main__":
-    main(parse_args())
+    main()
