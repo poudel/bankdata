@@ -1,6 +1,11 @@
 # for api
 fastapi
 
-# for tests
+# test runner
 pytest
+
+# test api client
 requests
+
+# to test nest.py as a python script
+pexpect
