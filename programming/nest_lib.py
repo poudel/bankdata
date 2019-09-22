@@ -4,10 +4,21 @@ according to the provided nesting keys.
 """
 
 
+def validate_item(item, nesting_keys):
+    item_keys = set(item.keys())
+
+    if not item_keys.issuperset(nesting_keys):
+        raise ValueError(
+            f"Given nesting_keys: {nesting_keys} is not a subset of item keys: {item_keys}."
+        )
+
+
 def nest_dicts(items, nesting_keys):
     big_tree = {}
 
     for item in items:
+        validate_item(item, nesting_keys)
+
         tree = big_tree
 
         # items in the leaf node list are always going to be:
