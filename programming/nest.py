@@ -1,20 +1,41 @@
 import sys
 import json
+import argparse
 from nest_lib import nest_dicts
 
 
-def parse_sys_args():
-    if len(sys.argv) < 2:
-        sys.stderr.write('Please provide space separated nesting keys..')
-    return sys.argv[1:]
+def build_args_parser():
+    parser = argparse.ArgumentParser(
+        description="Nest the given list of dictionaries according to the given sequence of keys"
+    )
+    parser.add_argument(
+        "nesting_keys",
+        nargs="+",
+        help="Provide nesting keys in the sequence you want to nest them.",
+    )
+
+    parser.add_argument(
+        "--input-data", nargs="?", type=argparse.FileType("r"), default=sys.stdin
+    )
+
+    return parser
 
 
-def main():
-    nesting_keys = parse_sys_args()
-    data = json.load(sys.stdin)
-    tree = nest_dicts(data, nesting_keys)
-    sys.stdout.write(json.dumps(tree, indent=4))
+def parse_args():
+    args_parser = build_args_parser()
+    return args_parser.parse_args()
+
+
+def main(args):
+    data = json.load(args.input_data)
+
+    try:
+        tree = nest_dicts(data, args.nesting_keys)
+        sys.stdout.write(json.dumps(tree, indent=4))
+    except Exception as err:
+        sys.stderr.write("Failed to nest: \n" f"{err}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
-    main()
+    main(parse_args())

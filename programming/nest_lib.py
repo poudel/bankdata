@@ -5,15 +5,23 @@ according to the provided nesting keys.
 
 
 def validate_item(item, nesting_keys):
-    item_keys = set(item.keys())
+    nesting_keys = set(nesting_keys)
 
-    if not item_keys.issuperset(nesting_keys):
+    difference = nesting_keys.difference(item.keys())
+
+    if difference:
         raise ValueError(
-            f"Given nesting_keys: {nesting_keys} is not a subset of item keys: {item_keys}."
+            f"Nesting key(s): {difference} doesn't exist inside item: {item}."
         )
 
 
+def validate_nesting_keys(nesting_keys):
+    if len(nesting_keys) != len(set(nesting_keys)):
+        raise ValueError(f"Given nesting scheme contain duplicate keys: {nesting_keys}")
+
+
 def nest_dicts(items, nesting_keys):
+    validate_nesting_keys(nesting_keys)
     big_tree = {}
 
     for item in items:

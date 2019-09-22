@@ -2,7 +2,9 @@ import os
 import json
 
 
-FIXTURES_DIR = os.path.join(os.path.dirname(__file__), 'fixtures')
+TESTS_DIR = os.path.dirname(__file__)
+PROJECT_DIR = os.path.dirname(TESTS_DIR)
+FIXTURES_DIR = os.path.join(TESTS_DIR, 'fixtures')
 
 
 COMMON_TEST_PARAMS = [
